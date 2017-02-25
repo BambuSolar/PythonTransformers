@@ -13,7 +13,7 @@ Transformer Deployer
     - `sudo apt-get install python3-pip`
     - `sudo apt-get install virtualenv python-virtualenv`
 
-3. Ejecutar el siguiente comando
+3. Ejecutar el siguiente comando, solo en caso que el comando 5 falle
 
 `export LC_ALL=C`
 
@@ -31,8 +31,22 @@ Transformer Deployer
 
 7. Instalar las dependencias
 
-`pip install -r requirements.txt`
+`pip3 install -r requirements.txt`
 
 8. Ejecutar el servidor
 
-`python transformers_server.py`
+`python3 app/transformers_server.py`
+
+##Configuración para ejecución en Producción
+
+1. Instalamos la dependencia
+
+`npm install forever -g`
+
+2. Ejecutamos el servidor en modo background
+
+`forever start -c python3 app/transformers_server.py`
+
+3. Deterner el servidor en background
+
+`forever stop -c python3 app/transformers_server.py`
