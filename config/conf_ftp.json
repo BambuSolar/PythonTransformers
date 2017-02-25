@@ -1,0 +1,14 @@
+{
+	"beta":{
+		"server" : "45.55.23.251",
+		"user": "root",
+		"password": "Javier36416999",
+		"path": "/var/www/html"
+	},
+	"prod":{
+		"server" : "localhost",
+		"user": "jcaballero",
+		"password": "36416999",
+		"path": "/var/www/bambu"
+	}
+}
