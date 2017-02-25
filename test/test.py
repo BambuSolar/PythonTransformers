@@ -1,6 +1,7 @@
-from factories import create_app
 import json
 import unittest
+
+from factories import create_app
 
 
 class TestAPI(unittest.TestCase):
