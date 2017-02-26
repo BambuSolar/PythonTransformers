@@ -342,6 +342,9 @@ class HTMLCrawler:
 
                 src = style[22:-2]
 
+                if src[0] == "'" and src[-1] == "'":
+                    src = src[1:-1]
+
                 if not (src in imgs):
 
                     imgs.append(src)
