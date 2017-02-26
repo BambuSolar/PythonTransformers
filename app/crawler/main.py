@@ -177,25 +177,33 @@ class HTMLCrawler:
 
         self.__get_img(self.__file_path())
 
+        print("Descargando favicon Index")
+
+        self.__get_favicon(self.__file_path())
+
         for p_t in self._get_produts_type_to_craw()['data']:
 
             file = self.get_dir_path() + p_t['filename']
 
             self.__get_index_product_type(p_t)
 
-            print("Descargando CSS Index")
+            print("Descargando CSS %s" % p_t['name'])
 
             self.__get_css(file)
 
-            print("Descargando JS Index")
+            print("Descargando JS %s" % p_t['name'])
 
             self.__get_js(file)
 
-            print("Descargando IMG Index")
+            print("Descargando IMG %s" % p_t['name'])
 
             self.__get_img(file)
 
-        print("Descargando IMG desde CSS Index")
+            print("Descargando favicon %s" % p_t['name'])
+
+            self.__get_favicon(file)
+
+        print("Descargando IMG desde CSS")
 
         self.__get_img_in_css()
 
@@ -412,3 +420,13 @@ class HTMLCrawler:
         f.write(text)
 
         f.close()
+
+    def __get_favicon(self, file):
+
+        for f in self.__page(file).cssselect("link[rel='icon']"):
+
+            src = f.get("href")
+
+            if self.__is_relative_path(src):
+
+                self.__download_local_img(src)

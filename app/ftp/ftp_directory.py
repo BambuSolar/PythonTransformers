@@ -83,17 +83,19 @@ class FtpDirectory:
 
             elif os.path.isdir(f):
 
-                try:
+                if f != '.git':
 
-                    ftp.mkd(f)
+                    try:
 
-                except ftplib.error_perm:
+                        ftp.mkd(f)
 
-                    print("Folder exists")
+                    except ftplib.error_perm:
 
-                ftp.cwd(f)
+                        print("Folder exists")
 
-                FtpDirectory.upload_folder(ftp, local_path + r'/{}'.format(f), remote_path + r'/{}'.format(f))
+                    ftp.cwd(f)
+
+                    FtpDirectory.upload_folder(ftp, local_path + r'/{}'.format(f), remote_path + r'/{}'.format(f))
 
         ftp.cwd('..')
 

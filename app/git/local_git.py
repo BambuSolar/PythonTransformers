@@ -3,6 +3,16 @@
 import subprocess
 import json
 
+def get_json_config():
+
+    f = open('./config/build_config.json', 'r')
+
+    json_config = json.loads(str(f.read()))
+
+    f.close()
+
+    return json_config
+
 
 def get_dir_path():
 
@@ -92,6 +102,23 @@ def set_version(tag):
 
         subprocess.check_output(
             'cd ' + get_dir_path() + ' && git reset --hard ' + tag,
+            shell=True
+        )
+
+        return True
+
+    except subprocess.CalledProcessError:
+
+        return False
+
+
+def update_branch(environment):
+    branch = get_json_config()['branch_version'][environment]['branch']
+
+    try:
+
+        subprocess.check_output(
+            'cd ' + get_dir_path() + ' && git reset HEAD --hard && git checkout ' + branch + ' && git pull origin ' + branch + ' --tag',
             shell=True
         )
 
