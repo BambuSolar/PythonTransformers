@@ -53,7 +53,7 @@ class HTMLCrawler:
 
     def __is_external_url(self, url):
 
-        return url[0] == 'h' and not url.contains(self.__get_base_url__)
+        return url[0] == 'h'
 
     def __is_relative_path(self, url):
 
