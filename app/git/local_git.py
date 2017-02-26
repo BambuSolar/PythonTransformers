@@ -7,7 +7,7 @@ import json
 def get_dir_path():
 
     with open('./config/build_config.json') as data_file:
-        dir_path = json.load(data_file.read())['path']
+        dir_path = json.load(data_file)['path']
         data_file.closed()
     return dir_path
 
