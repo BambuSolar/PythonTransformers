@@ -5,7 +5,7 @@ import json
 
 def get_json_config():
 
-    f = open('./config/build_config.json', 'r')
+    f = open('/opt/transformer_deployer/config/build_config.json', 'r')
 
     json_config = json.loads(str(f.read()))
 
@@ -16,7 +16,7 @@ def get_json_config():
 
 def get_dir_path():
 
-    f = open('./config/build_config.json', 'r')
+    f = open('/opt/transformer_deployer/config/build_config.json', 'r')
 
     dir_path = json.loads(str(f.read()))['path']
 
