@@ -12,6 +12,7 @@ import json
 from git import local_git
 import requests
 
+
 class HTMLCrawler:
     __css_files = []
 
@@ -33,9 +34,9 @@ class HTMLCrawler:
 
         return self.__base_url
 
-    def __get_url(self):
+    def __get_url(self, environment):
 
-        return self.__get_base_url__ + "/preview"
+        return self.__get_base_url__ + "/preview?environment=" + environment
 
     def get_dir_path(self):
 
@@ -149,8 +150,8 @@ class HTMLCrawler:
 
     def _get_produts_type_to_craw(self):
 
-        # jsonurl = urlopen(self.__base_url() + '/preview/product_types.json')
         r = requests.get(self.__base_url + '/preview/product_types.json')
+
         return r.json()
 
     def run(self, environment):
@@ -163,7 +164,7 @@ class HTMLCrawler:
 
         print("Descargando HTML")
 
-        self.__get_index()
+        self.__get_index(environment)
 
         print("Descargando CSS Index")
 
@@ -185,7 +186,7 @@ class HTMLCrawler:
 
             file = self.get_dir_path() + p_t['filename']
 
-            self.__get_index_product_type(p_t)
+            self.__get_index_product_type(p_t, environment)
 
             print("Descargando CSS %s" % p_t['name'])
 
@@ -209,11 +210,11 @@ class HTMLCrawler:
 
         self.__create_tag(environment, new_version)
 
-    def __get_index(self):
+    def __get_index(self, environment):
 
         print(self.__get_url())
 
-        response = urllib.request.urlopen(self.__get_url())
+        response = urllib.request.urlopen(self.__get_url(environment))
 
         data = response.read()
 
@@ -401,13 +402,13 @@ class HTMLCrawler:
 
                                     print(src.split('/'))
 
-    def __get_index_product_type(self, product_type):
+    def __get_index_product_type(self, product_type, environment):
 
         print(product_type)
 
         print(self.__get_base_url__ + product_type['crawler_url'])
 
-        response = urllib.request.urlopen(self.__get_base_url__ + product_type['crawler_url'])
+        response = urllib.request.urlopen(self.__get_base_url__ + product_type['crawler_url'] + "?environment=" + environment)
 
         data = response.read()
 

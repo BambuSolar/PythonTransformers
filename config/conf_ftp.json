@@ -6,9 +6,9 @@
 		"path": "/var/www/html"
 	},
 	"prod":{
-		"server" : "localhost",
-		"user": "jcaballero",
+		"server" : "31.170.165.236",
+		"user": "u769668152",
 		"password": "36416999",
-		"path": "/var/www/bambu"
+		"path": "/public_html"
 	}
 }
