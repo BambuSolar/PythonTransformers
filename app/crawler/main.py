@@ -212,7 +212,7 @@ class HTMLCrawler:
 
     def __get_index(self, environment):
 
-        print(self.__get_url())
+        print(self.__get_url(environment))
 
         response = urllib.request.urlopen(self.__get_url(environment))
 
