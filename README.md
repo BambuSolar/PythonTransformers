@@ -5,7 +5,7 @@ Transformer Deployer
 
 1- Clonar el repositorio
  
-`git clone git@github.com:BambuSolar/transformer_deployer.git`
+`git clone git@github.com:BambuSolar/PythonTransformers.git`
 
 2- Instalar dependencias
 
