@@ -8,9 +8,10 @@ from urllib import error
 import os
 import re
 import subprocess
-import json
 from git import local_git
+from go_director.main import GoDirector
 import requests
+
 
 class HTMLCrawler:
     __css_files = []
@@ -33,14 +34,13 @@ class HTMLCrawler:
 
         return self.__base_url
 
-    def __get_url(self):
+    def __get_url(self, environment):
 
-        return self.__get_base_url__ + "/preview"
+        return self.__get_base_url__ + "/preview?environment=" + environment
 
     def get_dir_path(self):
 
-        with open('./config/build_config.json') as data_file:
-            return json.load(data_file)['path']
+        return GoDirector.get_build_config('SourcePath')
 
     def __file_path(self):
 
@@ -67,21 +67,13 @@ class HTMLCrawler:
             'cd ' + self.get_dir_path() + ' && find . -maxdepth 1 -not -name .git -not -name . -exec rm -r {} +',
             shell=True)
 
-    def __get_json_config(self):
-
-         with open('./config/build_config.json') as data_file:
-
-            return json.load(data_file)
-
     def __get_new_version(self, environment):
 
         last_prod_version = local_git.get_last_version('prod').split('v')[1]
 
-        build_config = self.__get_json_config()
+        mayor_version = int(GoDirector.get_build_config('MayorVersion'))
 
-        mayor_version = int(build_config['mayor_version'])
-
-        minor_version = int(build_config['minor_version'])
+        minor_version = int(GoDirector.get_build_config('MinorVersion'))
 
         patch_version = 1
 
@@ -110,7 +102,7 @@ class HTMLCrawler:
 
     def __create_tag(self, environment, new_version):
 
-        branch = self.__get_json_config()['branch_version'][environment]['branch']
+        branch = GoDirector.get_conf_ftp(environment)['Branch']
 
         if new_version != "0.0.1":
 
@@ -138,7 +130,7 @@ class HTMLCrawler:
 
     def __change_branch(self, environment, new_version):
 
-        branch = self.__get_json_config()['branch_version'][environment]['branch']
+        branch = GoDirector.get_conf_ftp(environment)['Branch']
 
         if new_version != "0.0.1":
 
@@ -149,8 +141,8 @@ class HTMLCrawler:
 
     def _get_produts_type_to_craw(self):
 
-        # jsonurl = urlopen(self.__base_url() + '/preview/product_types.json')
         r = requests.get(self.__base_url + '/preview/product_types.json')
+
         return r.json()
 
     def run(self, environment):
@@ -163,7 +155,7 @@ class HTMLCrawler:
 
         print("Descargando HTML")
 
-        self.__get_index()
+        self.__get_index(environment)
 
         print("Descargando CSS Index")
 
@@ -185,7 +177,7 @@ class HTMLCrawler:
 
             file = self.get_dir_path() + p_t['filename']
 
-            self.__get_index_product_type(p_t)
+            self.__get_index_product_type(p_t, environment)
 
             print("Descargando CSS %s" % p_t['name'])
 
@@ -209,11 +201,11 @@ class HTMLCrawler:
 
         self.__create_tag(environment, new_version)
 
-    def __get_index(self):
+    def __get_index(self, environment):
 
-        print(self.__get_url())
+        print(self.__get_url(environment))
 
-        response = urllib.request.urlopen(self.__get_url())
+        response = urllib.request.urlopen(self.__get_url(environment))
 
         data = response.read()
 
@@ -401,13 +393,13 @@ class HTMLCrawler:
 
                                     print(src.split('/'))
 
-    def __get_index_product_type(self, product_type):
+    def __get_index_product_type(self, product_type, environment):
 
         print(product_type)
 
         print(self.__get_base_url__ + product_type['crawler_url'])
 
-        response = urllib.request.urlopen(self.__get_base_url__ + product_type['crawler_url'])
+        response = urllib.request.urlopen(self.__get_base_url__ + product_type['crawler_url'] + "?environment=" + environment)
 
         data = response.read()
 

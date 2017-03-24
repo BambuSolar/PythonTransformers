@@ -24,15 +24,25 @@ def create():
 
             ftp_driver = FtpDriver(environment)
 
-            ftp_driver.clean()
+            try:
 
-            ftp_driver.upload()
+                ftp_driver.clean()
 
-            content = {
-                "message": "Deploy success"
-            }
+                ftp_driver.upload()
 
-            return content, status.HTTP_201_CREATED
+                content = {
+                    "message": "Deploy success"
+                }
+
+                return content, status.HTTP_201_CREATED
+
+            except Exception as e:
+
+                content = {
+                    "message": str(e)
+                }
+
+                return content, status.HTTP_417_EXPECTATION_FAILED
 
         else:
 

@@ -1,3 +1,5 @@
+import urllib
+
 from flask import Blueprint, jsonify, request
 from flask_api import status, exceptions
 from crawler.main import HTMLCrawler
@@ -10,7 +12,16 @@ buildsBluePrint = Blueprint('builds', __name__)
 @buildsBluePrint.route('/api/builds', methods=['POST'])
 def create():
 
-    body = request.json
+    try:
+
+        body = request.json
+        
+    except Exception as e:
+        content = {
+            "message": str(e)
+        }
+
+        return content, status.HTTP_400_BAD_REQUEST
 
     if body:
 
@@ -54,6 +65,15 @@ def create():
             raise exceptions.ParseError(
                 "%s es un dato requerido" % (str(e)[1:-1].capitalize())
             )
+
+        except urllib.error.URLError as e:
+
+            raise exceptions.ParseError(
+                "%s es un dato requerido" % (str(e)[1:-1].capitalize())
+            )
+
+
+
 
     else:
 

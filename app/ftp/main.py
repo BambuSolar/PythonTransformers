@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
+
 from .ftp_directory import FtpDirectory
+from go_director.main import GoDirector
 import ftplib
-import json
 
 
 class FtpDriver:
@@ -13,8 +14,11 @@ class FtpDriver:
 
     def __init__(self, environment):
 
-        with open('./config/build_config.json') as data_file:
-            self.__set_source_folder(json.load(data_file)['path'])
+        source_folder = GoDirector.get_build_config('SourcePath')
+
+        print(source_folder)
+
+        self.__set_source_folder(source_folder)
 
         self.__set_general_conf(self.__get_configuration_file(environment))
 
@@ -24,35 +28,47 @@ class FtpDriver:
 
         print("Eliminando archivos")
 
-        FtpDirectory.clean_directory(self.__connect(self.__get_general_conf()), self.__get_general_conf()['path'])
+        FtpDirectory.clean_directory(self.__connect(self.__get_general_conf()), self.__get_general_conf()['FTPRootPath'])
 
     def upload(self):
 
         print("Subiendo archivos")
+
         FtpDirectory.upload_folder(self.__connect(self.__get_general_conf()),
                                    self.__get_source_folder(),
-                                   self.__get_general_conf()['path'])
-
+                                   self.__get_general_conf()['FTPRootPath'])
 
     @staticmethod
     def __connect(configuration):
 
-        server = configuration['server']
+        server = configuration['ServerUrl']
 
-        ftp = ftplib.FTP(server)
+        print(server)
 
-        ftp.login(configuration['user'], configuration['password'])
+        try:
 
-        ftp.cwd(configuration['path'])
+            ftp = ftplib.FTP(server)
 
-        data = []
+            ftp.login(configuration['UserFTP'], configuration['PasswordFTP'])
 
-        ftp.dir(data.append)
+            ftp.cwd(configuration['FTPRootPath'])
 
-        for line in data:
-            print("->", line)
+            data = []
 
-        return ftp
+            ftp.dir(data.append)
+
+            print(4)
+
+            for line in data:
+                print("->", line)
+
+            return ftp
+
+        except:
+
+            print("Error")
+
+            return None
 
     @staticmethod
     def __get_connection():
@@ -89,8 +105,4 @@ class FtpDriver:
     @staticmethod
     def __get_configuration_file(environment):
 
-        with open('./config/conf_ftp.json') as data_file:
-
-            data = json.load(data_file)
-
-            return data[environment]
+        return GoDirector.get_conf_ftp(environment)
