@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import http.client
+import requests
 import json
 
 
@@ -14,45 +14,33 @@ class GoDirector:
     @staticmethod
     def get_conf_ftp(environment):
 
-        conn = http.client.HTTPConnection(GoDirector.__get_base_url())
-
-        payload = {}
-
         headers = {
             'cache-control': "no-cache"
         }
 
-        uri = "/api/environments?query=Name:%s" % environment
+        url = "%s/api/environments?query=Name:%s" % (GoDirector.__get_base_url(), environment)
 
-        conn.request("GET", uri, payload, headers)
+        response = requests.request("GET", url, headers=headers)
 
-        res = conn.getresponse()
+        data = response.text
 
-        data = res.read()
-
-        result = json.loads(data.decode("utf-8"))
+        result = json.loads(data)
 
         return result['data'][0]
 
     @staticmethod
     def get_build_config(attribute):
 
-        conn = http.client.HTTPConnection(GoDirector.__get_base_url())
-
-        payload = {}
-
         headers = {
             'cache-control': "no-cache"
         }
 
-        uri = "/api/system_parameters?query=Key:%s" % attribute
+        url = "%s/api/system_parameters?query=Key:%s" % (GoDirector.__get_base_url(), attribute)
 
-        conn.request("GET", uri, payload, headers)
+        response = requests.request("GET", url, headers=headers)
 
-        res = conn.getresponse()
+        data = response.text
 
-        data = res.read()
-
-        result = json.loads(data.decode("utf-8"))
+        result = json.loads(data)
 
         return result['data'][0]['Value']
