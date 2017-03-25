@@ -9,7 +9,7 @@ class GoDirector:
     @staticmethod
     def __get_base_url():
 
-        return "localhost:3000"
+        return "http://45.55.23.251:3000"
 
     @staticmethod
     def get_conf_ftp(environment):

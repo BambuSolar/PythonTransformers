@@ -3,26 +3,22 @@
 import subprocess
 import json
 
-def get_json_config():
+from go_director.main import GoDirector
 
-    f = open('/opt/transformer_deployer/config/build_config.json', 'r')
-
-    json_config = json.loads(str(f.read()))
-
-    f.close()
-
-    return json_config
+dir_path = ''
 
 
 def get_dir_path():
 
-    f = open('/opt/transformer_deployer/config/build_config.json', 'r')
+    global dir_path
 
-    dir_path = json.loads(str(f.read()))['path']
+    if len(dir_path) > 0:
 
-    f.close()
+        return dir_path
 
-    return dir_path
+    else:
+
+        return GoDirector.get_build_config('SourcePath')
 
 
 def get_last_version(environment):
@@ -113,7 +109,8 @@ def set_version(tag):
 
 
 def update_branch(environment):
-    branch = get_json_config()['branch_version'][environment]['branch']
+
+    branch = GoDirector.get_conf_ftp(environment)['Branch']
 
     try:
 
