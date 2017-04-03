@@ -1,0 +1,78 @@
+FORMAT: 1A
+HOST: http://polls.apiblueprint.org/
+
+# Python Transformers
+
+Corazón funcional de los deploys y los builds de la aplicación.
+
+## Questions Collection [/questions]
+
+### Ver Todas las Versiones [GET]
+
++ Response 200 (application/json)
+
+        {
+          "beta": [
+            "v0.0.1-beta_1",
+            "v0.0.1-beta_2",
+            "v0.0.1-beta_3",
+            "v0.0.2-beta_1",
+            "v0.0.3-beta_1",
+            "v0.1.1-beta_1",
+            "v0.2.1-beta_1"
+          ],
+          "prod": [
+            "v0.0.1",
+            "v0.0.2",
+            "v0.0.3",
+            "v0.1.1",
+            "v0.2.1"
+          ],
+          "staging": []
+        }
+
+### Create a New Question [POST]
+
+You may create your own question using this action. It takes a JSON
+object containing a question and a collection of answers in the
+form of choices.
+
++ Request (application/json)
+
+        {
+            "question": "Favourite programming language?",
+            "choices": [
+                "Swift",
+                "Python",
+                "Objective-C",
+                "Ruby"
+            ]
+        }
+
++ Response 201 (application/json)
+
+    + Headers
+
+            Location: /questions/2
+
+    + Body
+
+            {
+                "question": "Favourite programming language?",
+                "published_at": "2015-08-05T08:40:51.620Z",
+                "choices": [
+                    {
+                        "choice": "Swift",
+                        "votes": 0
+                    }, {
+                        "choice": "Python",
+                        "votes": 0
+                    }, {
+                        "choice": "Objective-C",
+                        "votes": 0
+                    }, {
+                        "choice": "Ruby",
+                        "votes": 0
+                    }
+                ]
+            }
