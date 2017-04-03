@@ -24,13 +24,17 @@ class InitService:
 
         task += ' && mkdir ' + InitService.get_dir_path() + ' && cd ' + InitService.get_dir_path() + ' && git init'
 
-        git_repo = str("git@github.com:%s.git" % GoDirector.get_build_config('GitHubRepository'))
+        git_repo = "git@github.com:%s.git" % GoDirector.get_build_config('GitHubRepository')
 
-        task += str(' && git remote add origin ' + git_repo)
+        task += ' && git remote add origin ' + git_repo
+
+        task += ' && git config --global user.name "Javier Caballero"'
+
+        task += ' && git config --global user.email caballerojavier13@gmail.com'
 
         output = subprocess.check_output(
             task,
             shell=True
         )
 
-        return output.decode("utf-8")
+        return output.decode("utf-8")[:-1]
