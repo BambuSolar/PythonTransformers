@@ -12,6 +12,8 @@ from git import local_git
 from go_director.main import GoDirector
 import requests
 
+from services.init.init_service import InitService
+
 
 class HTMLCrawler:
     __css_files = []
@@ -128,16 +130,24 @@ class HTMLCrawler:
                 shell=True
             )
 
-    def __change_branch(self, environment, new_version):
+    def __change_branch(self, environment):
 
         branch = GoDirector.get_conf_ftp(environment)['Branch']
 
-        if new_version != "0.0.1":
+        output = subprocess.check_output(
+            'cd ' + InitService.get_dir_path() + ' && git branch',
+            shell=True
+        )
 
-            subprocess.call(
-                'cd ' + self.get_dir_path() + '&& git checkout ' + branch,
-                shell=True
-            )
+        new_branch = ''
+
+        if output.decode("utf-8").find(branch) < 0:
+            new_branch = '-b'
+
+        subprocess.call(
+            'cd ' + self.get_dir_path() + '&& git checkout ' + new_branch + ' ' + branch,
+            shell=True
+        )
 
     def _get_produts_type_to_craw(self):
 
@@ -149,7 +159,7 @@ class HTMLCrawler:
 
         new_version = self.__get_new_version(environment)
 
-        self.__change_branch(environment, new_version)
+        self.__change_branch(environment)
 
         self.__clean_dir()
 

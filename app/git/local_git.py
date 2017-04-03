@@ -41,7 +41,6 @@ def get_all_versions(environment):
     versions = output.decode("utf-8").split('\n')
 
     prod_versions = []
-    staging_versions = []
     beta_versions = []
 
     for v in versions:
@@ -49,24 +48,17 @@ def get_all_versions(environment):
             temp = v.split('-')
             if len(temp) < 2:
                 prod_versions.append(v)
-            elif temp[-1].split('_')[0] == 'staging':
-                staging_versions.append(v)
             elif temp[-1].split('_')[0] == 'beta':
                 beta_versions.append(v)
 
     if environment == "all":
         return {
             "prod": prod_versions,
-            "staging": staging_versions,
             "beta": beta_versions
         }
     elif environment == "prod":
         return {
             "prod": prod_versions
-        }
-    elif environment == "staging":
-        return {
-            "staging": staging_versions
         }
     elif environment == "beta":
         return {

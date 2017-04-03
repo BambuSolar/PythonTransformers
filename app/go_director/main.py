@@ -44,3 +44,19 @@ class GoDirector:
         result = json.loads(data)
 
         return result['data'][0]['Value']
+
+    @staticmethod
+    def get_environments():
+        headers = {
+            'cache-control': "no-cache"
+        }
+
+        url = "%s/api/environments" % GoDirector.__get_base_url()
+
+        response = requests.request("GET", url, headers=headers)
+
+        data = response.text
+
+        result = json.loads(data)
+
+        return result['data']
