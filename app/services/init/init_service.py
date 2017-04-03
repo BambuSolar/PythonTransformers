@@ -33,6 +33,4 @@ class InitService:
             shell=True
         )
 
-        print(output)
-
-        return
+        return output.decode("utf-8")

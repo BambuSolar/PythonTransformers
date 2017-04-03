@@ -10,10 +10,8 @@ initBluePrint = Blueprint('init', __name__)
 @initBluePrint.route('/api/init', methods=['POST'])
 def init():
 
-    InitService.init()
-
     content = jsonify({
-        "data": 'init successful'
+        "data": InitService.init()
     })
 
     return content, status.HTTP_200_OK
