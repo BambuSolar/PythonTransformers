@@ -28,7 +28,9 @@ class InitService:
 
         task += str(' && git remote add origin ' + git_repo)
 
-        subprocess.check_output(
+        output = subprocess.check_output(
             task,
             shell=True
         )
+
+        print(output)
