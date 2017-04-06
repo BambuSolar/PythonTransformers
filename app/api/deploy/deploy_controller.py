@@ -14,8 +14,6 @@ def create():
 
     if body:
 
-        print(body)
-
         version = body['version']
 
         environment = body['environment']

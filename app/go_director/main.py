@@ -14,8 +14,11 @@ class GoDirector:
     @staticmethod
     def get_conf_ftp(environment):
 
+        token = "eyJUeXAiOiJKV1QiLCJBbGciOiJIUzI1NiIsIkN0eSI6IiJ9.eyJJUCI6IjM1LjE2Ni4yMy4xNjUiLCJOYW1lIjoiUHl0aG9uVHJhbnNmb3JtZXJzIiwiaWF0IjoxNDkxNDQxNzc4fQ.d01OUDNxT2dod09INzRlR2dQMFpJdFlvTUFNdTc1MzE2V3lLRm1JYUY0RQ"
+
         headers = {
-            'cache-control': "no-cache"
+            'cache-control': "no-cache",
+            'Authorization': token
         }
 
         url = "%s/api/environments?query=Name:%s" % (GoDirector.__get_base_url(), environment)
@@ -31,8 +34,11 @@ class GoDirector:
     @staticmethod
     def get_build_config(attribute):
 
+        token = "eyJUeXAiOiJKV1QiLCJBbGciOiJIUzI1NiIsIkN0eSI6IiJ9.eyJJUCI6IjM1LjE2Ni4yMy4xNjUiLCJOYW1lIjoiUHl0aG9uVHJhbnNmb3JtZXJzIiwiaWF0IjoxNDkxNDQxNzc4fQ.d01OUDNxT2dod09INzRlR2dQMFpJdFlvTUFNdTc1MzE2V3lLRm1JYUY0RQ"
+
         headers = {
-            'cache-control': "no-cache"
+            'cache-control': "no-cache",
+            'Authorization': token
         }
 
         url = "%s/api/system_parameters?query=Key:%s" % (GoDirector.__get_base_url(), attribute)
@@ -47,8 +53,12 @@ class GoDirector:
 
     @staticmethod
     def get_environments():
+
+        token = "eyJUeXAiOiJKV1QiLCJBbGciOiJIUzI1NiIsIkN0eSI6IiJ9.eyJJUCI6IjM1LjE2Ni4yMy4xNjUiLCJOYW1lIjoiUHl0aG9uVHJhbnNmb3JtZXJzIiwiaWF0IjoxNDkxNDQxNzc4fQ.d01OUDNxT2dod09INzRlR2dQMFpJdFlvTUFNdTc1MzE2V3lLRm1JYUY0RQ"
+
         headers = {
-            'cache-control': "no-cache"
+            'cache-control': "no-cache",
+            'Authorization': token
         }
 
         url = "%s/api/environments" % GoDirector.__get_base_url()
