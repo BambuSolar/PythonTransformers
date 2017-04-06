@@ -14,7 +14,7 @@ class GoDirector:
     @staticmethod
     def get_conf_ftp(environment):
 
-        token = "eyJUeXAiOiJKV1QiLCJBbGciOiJIUzI1NiIsIkN0eSI6IiJ9.eyJJUCI6IjM1LjE2Ni4yMy4xNjUiLCJOYW1lIjoiUHl0aG9uVHJhbnNmb3JtZXJzIiwiaWF0IjoxNDkxNDQxNzc4fQ.d01OUDNxT2dod09INzRlR2dQMFpJdFlvTUFNdTc1MzE2V3lLRm1JYUY0RQ"
+        token = "eyJUeXAiOiJKV1QiLCJBbGciOiJIUzI1NiIsIkN0eSI6IiJ9.eyJJUCI6IjM1LjE2Ni4yMy4xNjUiLCJOYW1lIjoiUHl0aG9uVHJhbnNmb3JtZXJzIiwiaWF0IjoxNDkxNDQ4MzM5fQ.Q3I2eGhoeWpobkpNNDNlam1rckNHdThPY2V1Q2JhaVRCSG5hbjZick9Kaw"
 
         headers = {
             'cache-control': "no-cache",
@@ -34,7 +34,7 @@ class GoDirector:
     @staticmethod
     def get_build_config(attribute):
 
-        token = "eyJUeXAiOiJKV1QiLCJBbGciOiJIUzI1NiIsIkN0eSI6IiJ9.eyJJUCI6IjM1LjE2Ni4yMy4xNjUiLCJOYW1lIjoiUHl0aG9uVHJhbnNmb3JtZXJzIiwiaWF0IjoxNDkxNDQxNzc4fQ.d01OUDNxT2dod09INzRlR2dQMFpJdFlvTUFNdTc1MzE2V3lLRm1JYUY0RQ"
+        token = "eyJUeXAiOiJKV1QiLCJBbGciOiJIUzI1NiIsIkN0eSI6IiJ9.eyJJUCI6IjM1LjE2Ni4yMy4xNjUiLCJOYW1lIjoiUHl0aG9uVHJhbnNmb3JtZXJzIiwiaWF0IjoxNDkxNDQ4MzM5fQ.Q3I2eGhoeWpobkpNNDNlam1rckNHdThPY2V1Q2JhaVRCSG5hbjZick9Kaw"
 
         headers = {
             'cache-control': "no-cache",
@@ -54,7 +54,7 @@ class GoDirector:
     @staticmethod
     def get_environments():
 
-        token = "eyJUeXAiOiJKV1QiLCJBbGciOiJIUzI1NiIsIkN0eSI6IiJ9.eyJJUCI6IjM1LjE2Ni4yMy4xNjUiLCJOYW1lIjoiUHl0aG9uVHJhbnNmb3JtZXJzIiwiaWF0IjoxNDkxNDQxNzc4fQ.d01OUDNxT2dod09INzRlR2dQMFpJdFlvTUFNdTc1MzE2V3lLRm1JYUY0RQ"
+        token = "eyJUeXAiOiJKV1QiLCJBbGciOiJIUzI1NiIsIkN0eSI6IiJ9.eyJJUCI6IjM1LjE2Ni4yMy4xNjUiLCJOYW1lIjoiUHl0aG9uVHJhbnNmb3JtZXJzIiwiaWF0IjoxNDkxNDQ4MzM5fQ.Q3I2eGhoeWpobkpNNDNlam1rckNHdThPY2V1Q2JhaVRCSG5hbjZick9Kaw"
 
         headers = {
             'cache-control': "no-cache",
