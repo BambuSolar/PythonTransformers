@@ -83,9 +83,7 @@ def create():
 @buildsBluePrint.route('/api/builds', methods=['GET'])
 def list_all():
 
-    print(request.headers['Authorization'])
-
-    content = jsonify([]) #jsonify(local_git.get_all_versions('all'))
+    content = jsonify(local_git.get_all_versions('all'))
 
     return content, status.HTTP_200_OK
 
