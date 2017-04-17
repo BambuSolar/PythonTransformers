@@ -30,37 +30,39 @@ class FtpDirectory:
     @staticmethod
     def clean_directory(ftp, rm_path):
 
-        print("Eliminando: " + rm_path)
+        if str(rm_path).find(".") < 0:
 
-        ftp.cwd(rm_path)
+            print("Eliminando: " + rm_path)
 
-        FtpDirectory.__print_dir(ftp)
+            ftp.cwd(rm_path)
 
-        data = []
+            FtpDirectory.__print_dir(ftp)
 
-        ftp.dir(data.append)
+            data = []
 
-        for f in data:
+            ftp.dir(data.append)
 
-            if f != '.':
+            for f in data:
 
-                if FtpDirectory.__is_dir(f):
+                if f != '.':
 
-                    FtpDirectory.clean_directory(ftp, rm_path + '/' + FtpDirectory.__get_dir_name(f))
+                    if FtpDirectory.__is_dir(f):
 
-                    ftp.sendcmd("RMD " + (FtpDirectory.__get_dir_name(f)))
+                        FtpDirectory.clean_directory(ftp, rm_path + '/' + FtpDirectory.__get_dir_name(f))
 
-                else:
+                        ftp.sendcmd("RMD " + (FtpDirectory.__get_dir_name(f)))
 
-                    try:
+                    else:
 
-                        ftp.delete(FtpDirectory.__get_file_name(f))
+                        try:
 
-                    except ftplib.error_perm as e:
+                            ftp.delete(FtpDirectory.__get_file_name(f))
 
-                        print(f)
+                        except ftplib.error_perm as e:
 
-                        print(e)
+                            print(f)
+
+                            print(e)
 
         ftp.cwd('..')
         
