@@ -44,9 +44,11 @@ class FtpDirectory:
 
             if FtpDirectory.__is_dir(f):
 
-                FtpDirectory.clean_directory(ftp, rm_path + '/' + FtpDirectory.__get_dir_name(f))
+                if f != ".":
 
-                ftp.sendcmd("RMD " + (FtpDirectory.__get_dir_name(f)))
+                    FtpDirectory.clean_directory(ftp, rm_path + '/' + FtpDirectory.__get_dir_name(f))
+
+                    ftp.sendcmd("RMD " + (FtpDirectory.__get_dir_name(f)))
 
             else:
 
