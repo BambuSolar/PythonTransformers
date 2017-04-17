@@ -44,7 +44,9 @@ class FtpDirectory:
 
             if FtpDirectory.__is_dir(f):
 
-                if f != ".":
+                print(f)
+
+                if f != "./":
 
                     FtpDirectory.clean_directory(ftp, rm_path + '/' + FtpDirectory.__get_dir_name(f))
 
