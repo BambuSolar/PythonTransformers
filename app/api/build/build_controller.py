@@ -72,9 +72,6 @@ def create():
                 "%s es un dato requerido" % (str(e)[1:-1].capitalize())
             )
 
-
-
-
     else:
 
         raise exceptions.ParseError(detail=None)

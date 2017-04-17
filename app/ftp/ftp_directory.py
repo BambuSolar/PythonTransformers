@@ -42,23 +42,25 @@ class FtpDirectory:
 
         for f in data:
 
-            if FtpDirectory.__is_dir(f):
+            if f != '.':
 
-                FtpDirectory.clean_directory(ftp, rm_path + '/' + FtpDirectory.__get_dir_name(f))
+                if FtpDirectory.__is_dir(f):
 
-                ftp.sendcmd("RMD " + (FtpDirectory.__get_dir_name(f)))
+                    FtpDirectory.clean_directory(ftp, rm_path + '/' + FtpDirectory.__get_dir_name(f))
 
-            else:
+                    ftp.sendcmd("RMD " + (FtpDirectory.__get_dir_name(f)))
 
-                try:
+                else:
 
-                    ftp.delete(FtpDirectory.__get_file_name(f))
+                    try:
 
-                except ftplib.error_perm as e:
+                        ftp.delete(FtpDirectory.__get_file_name(f))
 
-                    print(f)
+                    except ftplib.error_perm as e:
 
-                    print(e)
+                        print(f)
+
+                        print(e)
 
         ftp.cwd('..')
         
