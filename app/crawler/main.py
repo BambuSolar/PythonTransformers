@@ -27,6 +27,10 @@ class HTMLCrawler:
 
         return self.__css_files
 
+    def __clear_css_files(self):
+
+        self.__css_files = []
+
     def __add_css_files(self, file):
 
         self.__css_files.append(file)
@@ -402,6 +406,8 @@ class HTMLCrawler:
                                     print(css['url'].split('/'))
 
                                     print(src.split('/'))
+
+        self.__clear_css_files()
 
     def __get_index_product_type(self, product_type, environment):
 
