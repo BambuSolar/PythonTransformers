@@ -161,6 +161,8 @@ class HTMLCrawler:
 
     def run(self, environment):
 
+        self.__clear_css_files()
+
         new_version = self.__get_new_version(environment)
 
         self.__change_branch(environment)
@@ -406,8 +408,6 @@ class HTMLCrawler:
                                     print(css['url'].split('/'))
 
                                     print(src.split('/'))
-
-        self.__clear_css_files()
 
     def __get_index_product_type(self, product_type, environment):
 
