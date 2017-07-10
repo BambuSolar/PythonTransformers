@@ -16,7 +16,7 @@ def update():
         try:
             environment = body['environment']
 
-            if environment not in ['prod', 'staging', 'beta']:
+            if environment not in ['prod', 'beta']:
 
                 raise exceptions.ParseError(
                     "Los environments aceptados son %s" % (str(['prod', 'staging', 'beta']))

@@ -211,6 +211,8 @@ class HTMLCrawler:
 
             self.__get_favicon(file)
 
+            self.__get_product_json(p_t['products'])
+
         print("Descargando IMG desde CSS")
 
         self.__get_img_in_css()
@@ -347,8 +349,13 @@ class HTMLCrawler:
 
                 imgs.append(src)
 
-                if not self.__is_external_url(src) and self.__is_relative_path(src):
-                    self.__download_local_img(src)
+                try:
+
+                    if not self.__is_external_url(src) and self.__is_relative_path(src):
+                        self.__download_local_img(src)
+
+                except:
+                    print("Error to download img <%s>" % str(src))
 
         for div in self.__page(file).cssselect("div"):
 
@@ -438,3 +445,21 @@ class HTMLCrawler:
             if self.__is_relative_path(src):
 
                 self.__download_local_img(src)
+
+    def __get_product_json(self, products):
+
+        for p in products:
+            response = urllib.request.urlopen(
+                self.__get_base_url__ + p['url'])
+
+            data = response.read()
+
+            text = data.decode('utf-8')
+
+            os.makedirs(self.get_dir_path() + '/info/products', exist_ok=True)
+
+            f = open(self.get_dir_path() + '/info/products' + str(p['id']) + '.json', 'w')
+
+            f.write(text)
+
+            f.close()

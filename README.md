@@ -9,9 +9,9 @@ Transformer Deployer
 
 2- Instalar dependencias
 
-    sudo apt-get install python3
-    sudo apt-get install python3-pip
-    sudo apt-get install virtualenv python-virtualenv
+    sudo apt install python3
+    sudo apt install python3-pip
+    sudo apt install virtualenv python-virtualenv
 
 3- Ejecutar el siguiente comando, solo en caso que el comando 5 falle
 

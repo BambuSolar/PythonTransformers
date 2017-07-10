@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 import subprocess
-import json
 
 from go_director.main import GoDirector
 
