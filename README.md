@@ -50,3 +50,10 @@ Transformer Deployer
 3- Deterner el servidor en background
 
 `forever stop -c python3 app/transformers_server.py`
+
+##Variables de Entorno
+
+Se deben establecer las siguientes variables de entorno para el correcto funcionamiento del sistema.
+
+ - GoDirectorURL: url del servidor de GoDirector
+ - GoDirectorToken: Token de autenticación al servidor de GoDirector

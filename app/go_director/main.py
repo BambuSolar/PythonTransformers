@@ -2,6 +2,7 @@
 
 import requests
 import json
+import os
 
 
 class GoDirector:
@@ -9,12 +10,17 @@ class GoDirector:
     @staticmethod
     def __get_base_url():
 
-        return "http://45.55.23.251:3000"
+        return os.getenv('GoDirectorURL')
+
+    @staticmethod
+    def __get_token():
+
+        return os.getenv('GoDirectorToken')
 
     @staticmethod
     def get_conf_ftp(environment):
 
-        token = "eyJUeXAiOiJKV1QiLCJBbGciOiJIUzI1NiIsIkN0eSI6IiJ9.eyJJUCI6IjEzOC4xOTcuMjA5LjE2MCIsIk5hbWUiOiJQeXRob25UcmFuc2Zvcm1lcnNEb2NrZXIiLCJpYXQiOjE0OTk1ODUzOTJ9.UVpmUnBTUHBVaXpvLUF4SzFqTGdFMjFpeWd2Yk5KOTJjS1haTVd3REJsWQ"
+        token = GoDirector.__get_token()
 
         headers = {
             'cache-control': "no-cache",
@@ -34,7 +40,7 @@ class GoDirector:
     @staticmethod
     def get_build_config(attribute):
 
-        token = "eyJUeXAiOiJKV1QiLCJBbGciOiJIUzI1NiIsIkN0eSI6IiJ9.eyJJUCI6IjEzOC4xOTcuMjA5LjE2MCIsIk5hbWUiOiJQeXRob25UcmFuc2Zvcm1lcnNEb2NrZXIiLCJpYXQiOjE0OTk1ODUzOTJ9.UVpmUnBTUHBVaXpvLUF4SzFqTGdFMjFpeWd2Yk5KOTJjS1haTVd3REJsWQ"
+        token = GoDirector.__get_token()
 
         headers = {
             'cache-control': "no-cache",
@@ -54,7 +60,7 @@ class GoDirector:
     @staticmethod
     def get_environments():
 
-        token = "eyJUeXAiOiJKV1QiLCJBbGciOiJIUzI1NiIsIkN0eSI6IiJ9.eyJJUCI6IjEzOC4xOTcuMjA5LjE2MCIsIk5hbWUiOiJQeXRob25UcmFuc2Zvcm1lcnNEb2NrZXIiLCJpYXQiOjE0OTk1ODUzOTJ9.UVpmUnBTUHBVaXpvLUF4SzFqTGdFMjFpeWd2Yk5KOTJjS1haTVd3REJsWQ"
+        token = GoDirector.__get_token()
 
         headers = {
             'cache-control': "no-cache",
