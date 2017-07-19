@@ -2,6 +2,8 @@ FROM caballerojavier13/python_transformers_base:latest
 
 MAINTAINER Javier Caballero <caballerojavier13@gmail.com>
 
+RUN mkdir /opt/page_crawler_bambu
+
 ADD . /opt/python_transformers
 
 ENV HOME /opt/python_transformers

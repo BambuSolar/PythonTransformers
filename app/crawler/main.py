@@ -243,33 +243,35 @@ class HTMLCrawler:
 
             href = s.get("href")
 
-            path = self.get_dir_path()
+            if not __is_external_url(href):
 
-            for d in href.split('/')[:-1]:
+                path = self.get_dir_path()
 
-                if len(d) > 0:
-                    path += '/' + d
+                for d in href.split('/')[:-1]:
 
-                    os.makedirs(path, exist_ok=True)
+                    if len(d) > 0:
+                        path += '/' + d
 
-            response = urllib.request.urlopen(self.__get_base_url__ + href)
+                        os.makedirs(path, exist_ok=True)
 
-            data = response.read()
+                response = urllib.request.urlopen(self.__get_base_url__ + href)
 
-            text = data.decode('utf-8')
+                data = response.read()
 
-            f = open(self.get_dir_path() + href, 'w')
+                text = data.decode('utf-8')
 
-            f.write(text)
+                f = open(self.get_dir_path() + href, 'w')
 
-            f.close()
+                f.write(text)
 
-            self.__add_css_files({
-                'path': self.get_dir_path() + href,
-                'url': href
-            })
+                f.close()
 
-            print(self.get_dir_path() + href)
+                self.__add_css_files({
+                    'path': self.get_dir_path() + href,
+                    'url': href
+                })
+
+                print(self.get_dir_path() + href)
 
     def __get_js(self, file):
 

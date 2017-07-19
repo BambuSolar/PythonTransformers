@@ -15,7 +15,7 @@ def create():
     try:
 
         body = request.json
-        
+
     except Exception as e:
         content = {
             "message": str(e)
@@ -34,7 +34,9 @@ def create():
             if environment not in ['prod', 'staging', 'beta']:
 
                 raise exceptions.ParseError(
-                    "Los environments aceptados son %s" % (str(['prod', 'staging', 'beta']))
+                    "Los environments aceptados son %s" % (
+                        str(['prod', 'staging', 'beta'])
+                        )
                 )
 
             before_deploy = local_git.get_last_version(environment)
