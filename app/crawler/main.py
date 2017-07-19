@@ -243,7 +243,7 @@ class HTMLCrawler:
 
             href = s.get("href")
 
-            if not self.__is_external_url(src):
+            if not self.__is_external_url(href):
 
                 path = self.get_dir_path()
 
