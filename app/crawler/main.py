@@ -359,24 +359,6 @@ class HTMLCrawler:
                 except:
                     print("Error to download img <%s>" % str(src))
 
-        for div in self.__page(file).cssselect("div"):
-
-            style = div.get("style")
-
-            if style:
-
-                src = style[22:-2]
-
-                if src[0] == "'" and src[-1] == "'":
-                    src = src[1:-1]
-
-                if not (src in imgs):
-
-                    imgs.append(src)
-
-                    if not self.__is_external_url(src) and self.__is_relative_path(src):
-                        self.__download_local_img(src)
-
     def __get_img_in_css(self):
 
         imgs = []
