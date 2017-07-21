@@ -442,7 +442,7 @@ class HTMLCrawler:
 
             os.makedirs(self.get_dir_path() + '/info/products', exist_ok=True)
 
-            f = open(self.get_dir_path() + '/info/products' + str(p['id']) + '.json', 'w')
+            f = open(self.get_dir_path() + '/info/products/' + str(p['id']) + '.json', 'w')
 
             f.write(text)
 
