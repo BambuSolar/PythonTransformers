@@ -1,0 +1,37 @@
+FROM python:3.5
+
+MAINTAINER Javier Caballero <caballerojavier13@gmail.com>
+
+ADD . /opt/python_transformers
+
+RUN /opt/page_crawler_bambu
+
+RUN apt-get update
+
+RUN apt-get install git -y
+
+RUN mkdir /root/.ssh
+
+ADD id_rsa /root/.ssh/
+
+ADD id_rsa.pub /root/.ssh/
+
+RUN chmod 400 /root/.ssh/id_rsa
+
+RUN git config --global user.email "caballerojavier13@gmail.com"
+
+RUN git config --global user.name "Javier Hernán Caballero García"
+
+RUN eval "$(ssh-agent -s)" && ssh-add /root/.ssh/id_rsa
+
+ENV HOME /opt/python_transformers
+
+WORKDIR /opt/python_transformers
+
+RUN export LC_ALL=C
+
+RUN pip3 install -r requirements.txt
+
+CMD python3 app/transformers_server.py
+
+EXPOSE 5000

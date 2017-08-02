@@ -47,14 +47,7 @@ class FtpDriver:
 
         try:
 
-            ftp = ftplib.FTP_TLS(timeout=10)
-            
-            ftp.connect(server, 21)
-            
-            # enable TLS
-            ftp.auth()
-            
-            ftp.prot_p()
+            ftp = ftplib.FTP(server)
 
             ftp.login(configuration['UserFTP'], configuration['PasswordFTP'])
 
@@ -63,8 +56,6 @@ class FtpDriver:
             data = []
 
             ftp.dir(data.append)
-
-            print(4)
 
             for line in data:
                 print("->", line)
