@@ -216,6 +216,8 @@ class HTMLCrawler:
         print("Descargando IMG desde CSS")
 
         self.__get_img_in_css()
+        
+        self.__get_images_json()
 
         self.__create_tag(environment, new_version)
 
@@ -447,3 +449,20 @@ class HTMLCrawler:
             f.write(text)
 
             f.close()
+            
+    def __get_images_json(self):
+        
+        response = urllib.request.urlopen(
+                self.__get_base_url__ + '/info/ourworks.json')
+
+        data = response.read()
+
+        text = data.decode('utf-8')
+
+        os.makedirs(self.get_dir_path() + '/info', exist_ok=True)
+
+        f = open(self.get_dir_path() + '/info/ourworks.json', 'w')
+
+        f.write(text)
+
+        f.close()
