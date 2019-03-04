@@ -2,22 +2,19 @@
 
 import subprocess
 
-from go_director.main import GoDirector
-
 dir_path = ''
 
 
 def get_dir_path():
 
     global dir_path
+    return dir_path
 
-    if len(dir_path) > 0:
 
-        return dir_path
+def set_dir_path(path):
 
-    else:
-
-        return GoDirector.get_build_config('SourcePath')
+    global dir_path
+    dir_path = path
 
 
 def get_last_version(environment):
@@ -99,9 +96,7 @@ def set_version(tag):
         return False
 
 
-def update_branch(environment):
-
-    branch = GoDirector.get_conf_ftp(environment)['Branch']
+def update_branch(branch):
 
     try:
 
@@ -115,11 +110,3 @@ def update_branch(environment):
     except subprocess.CalledProcessError:
 
         return False
-
-
-def main():
-    print(get_all_versions("all"))
-
-
-if __name__ == '__main__':
-    main()
