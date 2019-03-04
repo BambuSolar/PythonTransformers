@@ -8,20 +8,19 @@ from urllib import error
 import os
 import re
 import subprocess
-from git import local_git
-from go_director.main import GoDirector
 import requests
-
-from services.init.init_service import InitService
 
 
 class HTMLCrawler:
     __css_files = []
 
-    __base_url = ""
+    __base_url = ''
 
-    def __init__(self, url):
+    __dir_path = ''
+
+    def __init__(self, url, dir_path):
         self.__base_url = url
+        self.__dir_path = dir_path
 
     def __get_css_files(self):
 
@@ -46,7 +45,7 @@ class HTMLCrawler:
 
     def get_dir_path(self):
 
-        return GoDirector.get_build_config('SourcePath')
+        return self.__dir_path
 
     def __file_path(self):
 
@@ -73,42 +72,7 @@ class HTMLCrawler:
             'cd ' + self.get_dir_path() + ' && find . -maxdepth 1 -not -name .git -not -name . -exec rm -r {} +',
             shell=True)
 
-    def __get_new_version(self, environment):
-
-        last_prod_version = local_git.get_last_version('prod').split('v')[1]
-
-        mayor_version = int(GoDirector.get_build_config('MayorVersion'))
-
-        minor_version = int(GoDirector.get_build_config('MinorVersion'))
-
-        patch_version = 1
-
-        if int(last_prod_version.split('.')[0]) == mayor_version and int(last_prod_version.split('.')[1]) == minor_version:
-
-            patch_version = 1 + int(last_prod_version.split('.')[-1])
-
-        prod_version = "%s.%s.%s" % (mayor_version, minor_version, patch_version)
-
-        print(prod_version)
-
-        if environment == "prod":
-
-            return prod_version
-
-        else:
-
-            last_env_version = local_git.get_last_version(environment).split('v')[1]
-
-            env_counter = 1
-
-            if prod_version == last_env_version.split('-')[0]:
-                env_counter = 1 + int(last_env_version.split('-')[1].split('_')[1])
-
-            return "%s-%s_%s" % (prod_version, environment, env_counter)
-
-    def __create_tag(self, environment, new_version):
-
-        branch = GoDirector.get_conf_ftp(environment)['Branch']
+    def __create_tag(self, branch, new_version):
 
         if new_version != "0.0.1":
 
@@ -134,12 +98,10 @@ class HTMLCrawler:
                 shell=True
             )
 
-    def __change_branch(self, environment):
-
-        branch = GoDirector.get_conf_ftp(environment)['Branch']
+    def __change_branch(self, branch):
 
         output = subprocess.check_output(
-            'cd ' + InitService.get_dir_path() + ' && git branch',
+            'cd ' + self.get_dir_path() + ' && git branch',
             shell=True
         )
 
@@ -153,19 +115,17 @@ class HTMLCrawler:
             shell=True
         )
 
-    def _get_produts_type_to_craw(self):
+    def _get_products_type_to_craw(self):
 
         r = requests.get(self.__base_url + '/preview/product_types.json')
 
         return r.json()
 
-    def run(self, environment):
+    def run(self, branch, environment, new_version):
 
         self.__clear_css_files()
 
-        new_version = self.__get_new_version(environment)
-
-        self.__change_branch(environment)
+        # self.__change_branch(branch)
 
         self.__clean_dir()
 
@@ -189,7 +149,7 @@ class HTMLCrawler:
 
         self.__get_favicon(self.__file_path())
 
-        for p_t in self._get_produts_type_to_craw()['data']:
+        for p_t in self._get_products_type_to_craw()['data']:
 
             file = self.get_dir_path() + p_t['filename']
 
@@ -219,7 +179,7 @@ class HTMLCrawler:
         
         self.__get_images_json()
 
-        self.__create_tag(environment, new_version)
+        # self.__create_tag(branch, new_version)
 
     def __get_index(self, environment):
 
@@ -408,7 +368,9 @@ class HTMLCrawler:
 
         print(self.__get_base_url__ + product_type['crawler_url'])
 
-        response = urllib.request.urlopen(self.__get_base_url__ + product_type['crawler_url'] + "?environment=" + environment)
+        response = urllib.request.urlopen(
+            self.__get_base_url__ + product_type['crawler_url'] + "?environment=" + environment
+        )
 
         data = response.read()
 
@@ -436,7 +398,7 @@ class HTMLCrawler:
 
         for p in products:
             response = urllib.request.urlopen(
-                self.__get_base_url__ + p['url'])
+                self.__get_base_url__ + '/' + p['url'])
 
             data = response.read()
 
